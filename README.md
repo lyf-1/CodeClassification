@@ -52,9 +52,17 @@ There are five *.py files.
    python3 train.py --batch_size 32 --log_dir ./logs/
    ```
 
-   More hyper-parameters can be specified, and you can find them in the train.py. The training loss and valid accuracy are recorded in the ./logs/***.log
+   More hyper-parameters can be specified, and you can find them in the train.py. The training loss and valid accuracy are recorded in the ./logs
+   
+   We find the best model based on the valid accuracy. And the best model during training is also saved in ./models/best.model (default).
+   
+3. You can use the trained model to evaluate. 
 
-​		We find the best model based on the valid accuracy.
+   ```
+   python3 train.py --only_test --model_dir ./models
+   ```
+
+   In this way, you need to make sure that ./models/best.model exists.
 
 
 
