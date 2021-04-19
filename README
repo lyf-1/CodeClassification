@@ -1,0 +1,58 @@
+1. Original Dataset
+    ./data: train.pd, valid.pd, test.pd
+
+
+2. convert C source code to AST
+    ./data: train_ast.pkl, valid_ast.pkl, test_ast.pkl
+    
+    train_ast.pkl: 
+        columns: ['code', 'label', 'ast']
+
+3. traverse AST by preorder and postorder, get string sequence
+    ./data: train_ast.pkl, valid_ast.pkl, test_ast.pkl
+
+    train_ast.pkl:
+        columns: ['ast', 'label', 'preorder', 'postorder']
+
+4. using train_.pkl to train Word2Vec model. 
+
+
+5. Based on the vocab of Word2Vec model, convert string sequence to index.
+    ./data: train.pkl, valid.pkl, test.pkl
+------------------------------------
+
+exp:
+batch_size=32, 
+emb_file='./data/embedding/node_w2v_128', 
+embed_size=128, 
+epochs=100, 
+fix_emb=False, 
+gpu=0, 
+log_dir='./logs', 
+lr=0.001, 
+max_seq_len=1024, 
+rnn_state_dim=128, 
+weight_decay=0.0
+
+
+
+batch_size = 64
+batch_size = 128
+rnn_state_dim = 256
+rnn_state_dim = 512
+max_seq_len = 800
+max_seq_len = 2048
+weight_decay = 1e-6
+one_gru
+AdamX
+
+
+------------------------------------
+gpu8
+
+python3 train.py --batch_size 128 --rnn_state_dim 256 --log_dir ./logs/bs128_rnn256
+python3 train.py --batch_size 256 --log_dir ./logs/bs256
+python3 train.py --batch_size 128 --lr 0.0008 --log_dir ./logs/bs128_lr0008
+python3 train.py --batch_size 128 --lr 0.0005 --log_dir ./logs/bs128_lr0005
+
+
