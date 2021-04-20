@@ -66,12 +66,23 @@ There are five *.py files.
 
 
 
-## Algorithm & what the code does
+### Results
+
+We adopt the model at the training iteration with the lowest valid accuracy for evaluation in the test set.
+
+The hyper-parameters are shown in train.py. We fix the random seed, so you can get the similar results.
+
+```
+Test Acc: 0.9843
+```
+
+
+
+## Algorithm & What the code does
 
 ### Data Preparation
 
 1. The original datasets "./data/train.pd", "./data/valid.pd", "./data/test.pd", contain c source code and the corresponding label. There are total 104 unique labels.
-
 2. We convert c source code to Abstract Syntax Tree (AST) with the tool pycparser. 
 3. For each AST, we apply pre-order traverse, post-order traverse and level-order traverse to generate three node sequences, the node is represented by the token of its name. Thus, we generate three files "./data/train_ast.pkl", "./data/valid_ast.pkl", "./data/test_ast.pkl". 
 4. Use pre-order, post-order, level-order sequences of train set to train Word2Vec mode, and get the word embedding. The trained word embedding is used as the initial embedding of the downstream model.
@@ -82,7 +93,7 @@ There are five *.py files.
 
 ![](./img/model.png)
 
-1. For each AST, we generate three sequences using pre-order traverse, post-order traverse, level-order traverse.
+1. For each AST, we generate three sequences using pre-order traverse, post-order traverse, level-order traverse. Since some sequence might have very large length,  we limit the maximum sequence length to 1024, you can also adjust '--max_seq_len' in train.py
 2. We apply three bidirectional GRU models to process these three types of sequences. We store the hidden states of GRU at each time step, and use max pooling to aggregate them.
 3. After step 1 and 2, we get three vectors. We concatenate the three vectors, and apply three layer feed-forward neural network to make the final prediction.
 
