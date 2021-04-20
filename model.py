@@ -14,8 +14,11 @@ class RnnModel(nn.Module):
 
         self.embedding = nn.Embedding(vocab_size, emb_dim)
         if pretrain_emb is not None:
-            self.embedding = self.embedding.from_pretrained(pretrain_emb, freeze=fix_emb)       # [8307, 128]
-        
+            print("Using pretrained word embedding")
+            self.embedding = self.embedding.from_pretrained(torch.from_numpy(pretrain_emb), freeze=fix_emb)       # [8307, 128]
+        else:
+            print("No pretrained word embedding")
+            
         self.pre_gru = nn.GRU(emb_dim, rnn_state_dim, bidirectional=True, batch_first=True)
         self.post_gru = nn.GRU(emb_dim, rnn_state_dim, bidirectional=True, batch_first=True)
         self.level_gru = nn.GRU(emb_dim, rnn_state_dim, bidirectional=True, batch_first=True)

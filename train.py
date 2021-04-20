@@ -60,7 +60,7 @@ def main():
     embeddings = np.zeros((vocab_size+1, args.embed_size), dtype="float32")
     embeddings[:vocab_size] = word2vec.vectors
     
-    if not args.no_pretrain:
+    if args.no_pretrain:
         embeddings = None
     if not os.path.exists(args.log_dir):
         os.makedirs(args.log_dir)
