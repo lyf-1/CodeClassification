@@ -59,10 +59,10 @@ There are five *.py files.
 3. You can use the trained model to evaluate. 
 
    ```
-   python3 train.py --only_test --model_dir ./models
+   python3 train.py --only_test --model_dir ./models_best
    ```
 
-   In this way, you need to make sure that ./models/best.model exists.
+   ./models_best/best.model is our trained model. You can specify your own trained model.
 
 
 
