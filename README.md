@@ -46,12 +46,18 @@ There are five *.py files.
    python3 train.py
    ```
 
-   Also, you can specify hyper-parameters by
+   or  you can use the pretrained word embedding. (In our experiment, pretraining word embedding does not improve performance.)
 
    ```
-   python3 train.py --batch_size 32 --log_dir ./logs/
+   python3 train.py --use_pretrain
    ```
 
+   Also, you can specify other hyper-parameters by
+   
+   ```
+   python3 train.py --batch_size 128 --log_dir ./logs/
+   ```
+   
    More hyper-parameters can be specified, and you can find them in the train.py. The training loss and valid accuracy are recorded in the ./logs
    
    We find the best model based on the valid accuracy. And the best model during training is also saved in ./models/best.model (default).
@@ -74,9 +80,14 @@ The hyper-parameters are shown in train.py. We fix the random seed, so you can g
 
 (If you want to train the model on GPU with default hyper-params, make sure your GPU has at least 8G memory.)
 
-```
-Test Acc: 0.9843
-```
+* Final_Model. 
+* Use-Pretrained-Emb: Use pretrained word embedding. 
+* One_BiGRU: For the pre-order/post-order/level-order sequences, use one BiGRU to process them.
+* One_Seq: Only use pre-order traverse sequence.
+
+|          | Final_Model | Use Pretrained Emb | One_BiGRU | One_Seq |
+| -------- | ----------- | ------------------ | --------- | ------- |
+| Test ACC | 0.9843      | 0.9811             | 0.9723    | 0.9771  |
 
 
 

@@ -17,8 +17,8 @@ def parse_args():
     
     # pretrined embedding
     parser.add_argument('--emb_file', default='./data/embedding/node_w2v_128')
-    parser.add_argument('--no_pretrain', action='store_true',
-                        help='whether use pretrained embs, Default is to use')
+    parser.add_argument('--use_pretrain', action='store_true',
+                        help='whether use pretrained embs, Default is not use')
     parser.add_argument('--fix_emb', action='store_true',
                         help='whether fintune pretrained node embs, Default is to finetune')
     
@@ -60,7 +60,7 @@ def main():
     embeddings = np.zeros((vocab_size+1, args.embed_size), dtype="float32")
     embeddings[:vocab_size] = word2vec.vectors
     
-    if args.no_pretrain:
+    if not args.use_pretrain:
         embeddings = None
     if not os.path.exists(args.log_dir):
         os.makedirs(args.log_dir)
