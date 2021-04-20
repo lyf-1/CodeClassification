@@ -23,9 +23,10 @@ def parse_args():
                         help='whether fintune pretrained node embs, Default is to finetune')
     
     # train settings
-    parser.add_argument('--epochs', type=int, default=100,
+    parser.add_argument('--only_test', action='store_true')
+    parser.add_argument('--epochs', type=int, default=20,
                         help='number of training epoch')
-    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--lr', type=float, default=0.001)
     parser.add_argument('--weight_decay', type=float, default=0.,
                         help='weight decay')
@@ -33,7 +34,7 @@ def parse_args():
                         help='dropout rate')
     parser.add_argument('--embed_size', type=int, default=128,
                         help='size of the embeddings')
-    parser.add_argument('--rnn_state_dim', type=int, default=128)
+    parser.add_argument('--rnn_state_dim', type=int, default=256)
     parser.add_argument('--max_seq_len', type=int, default=1024)
     parser.add_argument('--gpu', type=int, default=0,
                         help='gpu device, -1 means using cpu')
@@ -67,12 +68,13 @@ def main():
     log_file = os.path.join(args.log_dir, '%d.log'%time.time())
     
     model = CodeModel(args, vocab_size+1, label_size=104, log_file=log_file, pretrain_emb=embeddings)
-    model.train(train_data, valid_data, test_data)
+    if not args.only_test:
+        model.train(train_data, valid_data, test_data)
 
     model_path = os.path.join(args.model_dir, 'best.model')
     model.load_model(model_path)
     test_acc = model.evaluate(test_data)
-    print("Test Acc: %.4f" % test_acc)
+    print("Using model %s, Test Acc: %.4f" % (model_path, test_acc))
 
     
 

@@ -63,10 +63,11 @@ class CodeModel():
         # write train/valid/test result into file
         self.log = log_file
         with open(self.log, 'a') as f:
-            f.write(str(args)+'\n')
+            f.write(str(args)+'\n')        
         self.model_dir = args.model_dir
         if not os.path.exists(self.model_dir):
             os.makedirs(self.model_dir)
+
 
         self.args = args
         self.model = RnnModel(vocab_size, label_size, args.embed_size, args.rnn_state_dim, pretrain_emb, args.fix_emb, self.device)
@@ -122,8 +123,6 @@ class CodeModel():
                 with open(self.log, 'a') as f:
                     f.write(eval_record+'\n')
 
-
-
     def evaluate(self, data):
         data_gen = batch_generator(data, self.args.batch_size, max_len=self.args.max_seq_len, device=self.device)
         eval_acc = 0.
@@ -140,7 +139,6 @@ class CodeModel():
         eval_acc /= total
         return eval_acc
 
-    
     def save_model(self):
         """
             Saves the model into model_dir 
