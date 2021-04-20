@@ -70,11 +70,15 @@ There are five *.py files.
 
 We adopt the model at the training iteration with the lowest valid accuracy for evaluation in the test set.
 
-The hyper-parameters are shown in train.py. We fix the random seed, so you can get the similar results.
+The hyper-parameters are shown in train.py. We fix the random seed, so you can get the similar results. 
+
+(If you want to train the model on GPU with default hyper-params, make sure your GPU has at least 8G memory.)
 
 ```
 Test Acc: 0.9843
 ```
+
+
 
 
 
